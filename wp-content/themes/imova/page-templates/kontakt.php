@@ -18,7 +18,7 @@ the_post();
 			<ul class="contact-list contact-list--large">
 				<li><?php echo imova_icon( 'phone', 20 ); // phpcs:ignore ?><div><span class="label">Telefon</span><a href="<?php echo esc_attr( imova_tel_href( imova_opt( 'phone' ) ) ); ?>"><?php echo esc_html( imova_opt( 'phone' ) ); ?></a></div></li>
 				<li><?php echo imova_icon( 'mail', 20 ); // phpcs:ignore ?><div><span class="label">E-Mail</span><a href="mailto:<?php echo esc_attr( imova_opt( 'email' ) ); ?>"><?php echo esc_html( imova_opt( 'email' ) ); ?></a></div></li>
-				<li><?php echo imova_icon( 'pin', 20 ); // phpcs:ignore ?><div><span class="label">Anschrift</span><address><?php echo esc_html( imova_opt( 'company' ) ); ?><br><?php echo esc_html( imova_opt( 'street' ) ); ?><br><?php echo esc_html( imova_opt( 'zip_city' ) ); ?></address></div></li>
+				<li><?php echo imova_icon( 'pin', 20 ); // phpcs:ignore ?><div><span class="label">Region</span><span class="contact-list__value">München &amp; Augsburg</span></div></li>
 			</ul>
 			<p class="muted"><?php echo esc_html( imova_field( 'office_text' ) ); ?></p>
 			<?php if ( get_the_content() ) : ?>

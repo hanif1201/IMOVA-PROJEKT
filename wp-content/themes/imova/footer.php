@@ -18,11 +18,7 @@
 
 			<div class="site-footer__col">
 				<p class="site-footer__heading">Kontakt</p>
-				<address>
-					<?php echo esc_html( imova_opt( 'company' ) ); ?><br>
-					<?php echo esc_html( imova_opt( 'street' ) ); ?><br>
-					<?php echo esc_html( imova_opt( 'zip_city' ) ); ?>
-				</address>
+				<p><?php echo esc_html( imova_opt( 'company' ) ); ?><br><span class="muted">München &amp; Augsburg</span></p>
 				<p>
 					<a href="<?php echo esc_attr( imova_tel_href( imova_opt( 'phone' ) ) ); ?>"><?php echo esc_html( imova_opt( 'phone' ) ); ?></a><br>
 					<a href="mailto:<?php echo esc_attr( imova_opt( 'email' ) ); ?>"><?php echo esc_html( imova_opt( 'email' ) ); ?></a>

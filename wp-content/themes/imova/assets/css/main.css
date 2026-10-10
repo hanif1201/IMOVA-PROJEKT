@@ -694,3 +694,4 @@ p { margin: 0 0 1em; }
 .property-card__media .placeholder-media__mark--logo,
 .property-card__link:hover .property-card__media .placeholder-media__mark--logo { width: auto; height: 64px; max-width: 60%; object-fit: contain; transform: none; }
 .site-logo img { height: 56px; }
+.contact-list--large .contact-list__value { color: var(--ink); font: 500 1.375rem/1.35 var(--serif); }
