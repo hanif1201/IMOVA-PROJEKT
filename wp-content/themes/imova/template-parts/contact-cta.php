@@ -7,7 +7,7 @@
 
 $front = (int) get_option( 'page_on_front' );
 $about = get_posts( array( 'post_type' => 'page', 'meta_key' => '_wp_page_template', 'meta_value' => 'page-templates/ueber-uns.php', 'posts_per_page' => 1, 'fields' => 'ids' ) );
-$photo = $about ? imova_img_url( get_post_meta( $about[0], '_imova_pf_founder_image', true ), 'imova-portrait' ) : '';
+$photo = $about ? imova_field_img( 'founder_image', 'imova-portrait', (int) $about[0] ) : '';
 ?>
 <section class="contact-cta">
 	<div class="container contact-cta__inner" data-reveal>
