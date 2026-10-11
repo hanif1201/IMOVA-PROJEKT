@@ -112,6 +112,15 @@ function imova_prop_price_label( $post_id = null ): string {
 }
 
 /**
+ * Ersparnis gegenüber der üblichen Käuferprovision (0, wenn kein Preis hinterlegt).
+ */
+function imova_prop_saving( $post_id = null ): int {
+	$price = imova_prop( 'price', $post_id );
+	$rate  = (float) str_replace( ',', '.', imova_opt( 'commission_rate' ) );
+	return is_numeric( $price ) && $rate > 0 ? (int) round( (float) $price * $rate / 100 ) : 0;
+}
+
+/**
  * Ortsangabe für Karten und Kopfzeilen: Ort-Feld, sonst erster Standort.
  */
 function imova_prop_location( $post_id = null ): string {

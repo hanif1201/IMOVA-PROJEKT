@@ -123,16 +123,25 @@ function imova_logo_url( string $variant = 'dark' ): string {
 	if ( ! $id && 'dark' === $variant ) {
 		$id = (int) get_theme_mod( 'custom_logo' );
 	}
-	return $id ? (string) wp_get_attachment_image_url( $id, 'full' ) : '';
+	if ( $id ) {
+		return (string) wp_get_attachment_image_url( $id, 'full' );
+	}
+	// Mitgeliefertes Logo als Standard.
+	return IMOVA_URI . '/assets/img/' . ( 'light' === $variant ? 'logo-hell.png' : 'logo-dunkel.png' );
 }
 
 /**
  * Markenzeichen auf dunklen Platzhalterflächen: helles Logo oder Schriftzug.
  */
 function imova_mark( string $class = 'placeholder-media__mark' ): string {
-	$logo = imova_logo_url( 'light' );
+	$logo   = imova_logo_url( 'light' );
+	$invert = false;
+	if ( ! $logo ) {
+		$logo   = imova_logo_url( 'dark' );
+		$invert = (bool) $logo;
+	}
 	if ( $logo ) {
-		return sprintf( '<img class="%s %s--logo" src="%s" alt="">', esc_attr( $class ), esc_attr( $class ), esc_url( $logo ) );
+		return sprintf( '<img class="%1$s %1$s--logo%2$s" src="%3$s" alt="">', esc_attr( $class ), $invert ? ' logo-invert' : '', esc_url( $logo ) );
 	}
 	return sprintf( '<span class="%s">IMOVA</span>', esc_attr( $class ) );
 }
@@ -141,11 +150,18 @@ function imova_mark( string $class = 'placeholder-media__mark' ): string {
  * Logo: hochgeladenes Logo (Design → Customizer → Website-Informationen) oder Wortmarke.
  */
 function imova_logo( string $variant = 'dark' ): void {
-	$logo = imova_logo_url( $variant );
+	$logo   = imova_logo_url( $variant );
+	$invert = false;
+	// Ohne helle Logo-Version wird das dunkle Logo für dunkle Flächen umgefärbt.
+	if ( ! $logo && 'light' === $variant ) {
+		$logo   = imova_logo_url( 'dark' );
+		$invert = (bool) $logo;
+	}
 	if ( $logo ) {
 		printf(
-			'<a class="site-logo site-logo--%s" href="%s" rel="home"><img src="%s" alt="%s"></a>',
+			'<a class="site-logo site-logo--%s%s" href="%s" rel="home"><img src="%s" alt="%s"></a>',
 			esc_attr( $variant ),
+			$invert ? ' logo-invert' : '',
 			esc_url( home_url( '/' ) ),
 			esc_url( $logo ),
 			esc_attr( imova_opt( 'company' ) )

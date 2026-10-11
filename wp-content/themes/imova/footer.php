@@ -14,11 +14,18 @@
 			<div class="site-footer__brand">
 				<?php imova_logo( 'light' ); ?>
 				<p class="site-footer__claim">Bestehendes bewahren.<br>Werte für morgen schaffen.</p>
+				<?php if ( imova_opt( 'instagram' ) ) : ?>
+					<a class="social-link" href="<?php echo esc_url( imova_opt( 'instagram' ) ); ?>" target="_blank" rel="noopener"><?php echo imova_icon( 'instagram', 20 ); // phpcs:ignore ?> Instagram</a>
+				<?php endif; ?>
 			</div>
 
 			<div class="site-footer__col">
 				<p class="site-footer__heading">Kontakt</p>
-				<p><?php echo esc_html( imova_opt( 'company' ) ); ?><br><span class="muted">München &amp; Augsburg</span></p>
+				<address>
+					<?php echo esc_html( imova_opt( 'company' ) ); ?><br>
+					<?php echo esc_html( imova_opt( 'street' ) ); ?><br>
+					<?php echo esc_html( imova_opt( 'zip_city' ) ); ?>
+				</address>
 				<p>
 					<a href="<?php echo esc_attr( imova_tel_href( imova_opt( 'phone' ) ) ); ?>"><?php echo esc_html( imova_opt( 'phone' ) ); ?></a><br>
 					<a href="mailto:<?php echo esc_attr( imova_opt( 'email' ) ); ?>"><?php echo esc_html( imova_opt( 'email' ) ); ?></a>

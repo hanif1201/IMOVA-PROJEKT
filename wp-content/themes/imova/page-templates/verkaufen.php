@@ -27,7 +27,7 @@ get_template_part(
 	<div class="container">
 		<h2 class="h2" data-reveal><?php echo esc_html( imova_field( 'benefits_title' ) ); ?></h2>
 		<div class="benefits" data-reveal>
-			<?php foreach ( array( 1 => 'percent', 2 => 'clock', 3 => 'handshake', 4 => 'file' ) as $i => $icon ) : ?>
+			<?php foreach ( array( 1 => 'percent', 2 => 'clock', 3 => 'shield', 4 => 'home' ) as $i => $icon ) : ?>
 				<div class="benefit">
 					<span class="benefit__icon"><?php echo imova_icon( $icon, 24 ); // phpcs:ignore ?></span>
 					<h3 class="h4"><?php echo esc_html( imova_field( "benefit{$i}_title" ) ); ?></h3>
@@ -63,7 +63,7 @@ get_template_part(
 			<p class="lead"><?php echo esc_html( imova_field( 'form_text' ) ); ?></p>
 			<ul class="checklist">
 				<li><?php echo imova_icon( 'check', 18 ); // phpcs:ignore ?> Kostenlos &amp; unverbindlich</li>
-				<li><?php echo imova_icon( 'check', 18 ); // phpcs:ignore ?> Persönliche Rückmeldung vom Geschäftsführer</li>
+				<li><?php echo imova_icon( 'check', 18 ); // phpcs:ignore ?> Persönliche Rückmeldung</li>
 				<li><?php echo imova_icon( 'check', 18 ); // phpcs:ignore ?> Vertrauliche Behandlung Ihrer Daten</li>
 			</ul>
 		</div>

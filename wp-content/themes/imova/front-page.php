@@ -107,6 +107,15 @@ $listings  = new WP_Query(
 			<h2 class="h2"><?php echo esc_html( imova_field( 'savings_title' ) ); ?></h2>
 			<p class="lead"><?php echo esc_html( imova_field( 'savings_text' ) ); ?></p>
 
+			<div class="costs-compare">
+				<p class="costs-compare__title"><?php echo esc_html( imova_field( 'costs_title' ) ); ?></p>
+				<div class="costs-compare__row">
+					<div><span>Mit Makler</span><strong>ca. <?php echo esc_html( imova_closing_costs_with_agent() ); ?> %</strong></div>
+					<div class="is-imova"><span>Mit Imova</span><strong>max. <?php echo esc_html( imova_opt( 'closing_costs' ) ); ?> %</strong></div>
+				</div>
+				<p class="costs-compare__text"><?php echo esc_html( imova_field( 'costs_text' ) ); ?></p>
+			</div>
+
 			<div class="calc" data-calc data-rate="<?php echo esc_attr( (string) $rate_num ); ?>">
 				<label class="calc__label" for="calc-price">Kaufpreis</label>
 				<output class="calc__price" data-calc-price for="calc-price">400.000 €</output>

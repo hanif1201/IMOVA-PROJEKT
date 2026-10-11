@@ -27,10 +27,12 @@ function imova_settings_fields(): array {
 			'phone'        => 'Telefon',
 			'email'        => 'E-Mail (öffentlich)',
 			'notify_email' => 'E-Mail für Formular-Benachrichtigungen',
+			'instagram'    => 'Instagram-Profil (Link)',
 		),
 		'Texte & Zahlen' => array(
 			'commission_rate' => 'Übliche Käuferprovision in % (z. B. 3,57)',
 			'referral_reward' => 'Tippgeber-Provision (Kurztext)',
+			'closing_costs'   => 'Max. Kaufnebenkosten ohne Makler in % (z. B. 5,5)',
 		),
 	);
 }
@@ -64,7 +66,7 @@ add_action(
 						if ( str_starts_with( $key, 'logo_' ) ) {
 							$clean[ $key ] = absint( $value ) ? (string) absint( $value ) : '';
 						} else {
-							$clean[ $key ] = str_contains( $key, 'email' ) ? sanitize_email( $value ) : sanitize_text_field( $value );
+							$clean[ $key ] = str_contains( $key, 'email' ) ? sanitize_email( $value ) : ( 'instagram' === $key ? esc_url_raw( $value ) : sanitize_text_field( $value ) );
 						}
 					}
 					return $clean;

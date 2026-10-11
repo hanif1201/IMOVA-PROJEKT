@@ -9,6 +9,46 @@
 defined( 'ABSPATH' ) || exit;
 
 add_action( 'after_switch_theme', 'imova_run_setup' );
+add_action( 'init', 'imova_run_updates', 20 );
+
+/**
+ * Aktualisiert bei bestehenden Installationen einmalig Inhalte, die noch dem
+ * ursprünglichen Standardtext entsprechen. Selbst bearbeitete Inhalte bleiben unberührt.
+ */
+function imova_run_updates(): void {
+	$version = (string) get_option( 'imova_content_version', '1.0.0' );
+	if ( version_compare( $version, '1.2.0', '>=' ) || ! get_option( 'imova_setup_done' ) ) {
+		if ( version_compare( $version, IMOVA_VERSION, '<' ) ) {
+			update_option( 'imova_content_version', IMOVA_VERSION );
+		}
+		return;
+	}
+
+	// Firmenname in der Schreibweise des Handelsregisters.
+	$settings = (array) get_option( 'imova_settings', array() );
+	if ( ( $settings['company'] ?? '' ) === 'IMOVA PROJEKT GmbH' ) {
+		$settings['company'] = 'Imova Projekt GmbH';
+		update_option( 'imova_settings', $settings );
+	}
+
+	$update = function ( string $slug, string $marker, callable $content ) {
+		$page = get_page_by_path( $slug );
+		if ( $page && str_contains( $page->post_content, $marker ) ) {
+			wp_update_post( array( 'ID' => $page->ID, 'post_content' => $content( $page->post_content ) ) );
+		}
+	};
+	$update( 'impressum', '[Platzhalter – Umsatzsteuer', fn() => imova_default_imprint() );
+	$update( 'ueber-uns', '[Platzhalter – dieser Abschnitt', fn() => imova_default_about_story() );
+	$update( 'datenschutz', 'IMOVA PROJEKT GmbH', fn( $c ) => str_replace( 'IMOVA PROJEKT GmbH', 'Imova Projekt GmbH', $c ) );
+	$update( 'datenschutz', '[Platzhalter: z. B. 14]', fn( $c ) => str_replace( 'Die Logfiles werden nach spätestens [Platzhalter: z. B. 14] Tagen gelöscht.', 'Die Logfiles werden nach kurzer Zeit automatisch gelöscht, sofern nicht ein Sicherheitsvorfall eine längere Aufbewahrung erfordert.', $c ) );
+	$update( 'datenschutz', '[Platzhalter: Name und Anschrift des Hosting-Anbieters]', fn( $c ) => str_replace( array( '[Platzhalter: Name und Anschrift des Hosting-Anbieters]', 'Bitte vor Veröffentlichung prüfen lassen und die Angaben zum Hosting ergänzen.' ), array( 'der IONOS SE, Elgendorfer Straße 57, 56410 Montabaur', 'Bitte vor Veröffentlichung prüfen lassen.' ), $c ) );
+
+	// 1.2.0
+	$update( 'ueber-uns', 'Mit IMOVA PROJEKT möchte ich', fn( $c ) => str_replace( 'Mit IMOVA PROJEKT möchte ich', 'Mit Imova möchte ich', $c ) );
+	$update( 'impressum', '[Platzhalter – Bildquellen', fn( $c ) => str_replace( '[Platzhalter – Bildquellen angeben, z. B. „Fotos: Unsplash“ bzw. die Fotografen der Objektbilder.]', 'Symbolbilder: Unsplash (unsplash.com)', $c ) );
+
+	update_option( 'imova_content_version', '1.2.0' );
+}
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	WP_CLI::add_command(
@@ -336,19 +376,35 @@ function imova_default_about_story(): string {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>[Platzhalter – dieser Abschnitt wird mit Sebastians eigener Geschichte gefüllt.] Hier erzählt Sebastian Fäth, woher er kommt, wie er zur Immobilie gefunden hat und welche Erfahrung er mitbringt – persönlich, in eigenen Worten.</p>
+<p>Mein beruflicher Weg begann ursprünglich in der Automobilbranche. Durch meine Familie haben Immobilien aber schon immer eine wichtige Rolle in meinem Leben gespielt. Aus diesem Interesse wurde mit der Zeit eine echte Leidenschaft – und irgendwann der Wunsch, beruflich meinen eigenen Weg zu gehen.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>[Platzhalter] Was ihn an Bestandsimmobilien reizt: das Potenzial, das in Häusern mit Geschichte steckt, und die Freude daran, es mit durchdachten Modernisierungen sichtbar zu machen.</p>
+<p>Also habe ich den Schritt gewagt und mich in der Immobilienbranche selbstständig gemacht. Eine Entscheidung, über die ich heute sehr froh bin.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Gemeinsam mit meinem Vater bin ich auch im Neubau tätig. Mindestens genauso spannend finde ich es aber, das Potenzial bestehender Immobilien zu entdecken, sie weiterzuentwickeln und neuen Wohnraum zu schaffen. Besonders wichtig ist mir dabei, vorhandene Substanz sinnvoll zu erhalten und meinen Beitrag zu attraktivem, bezahlbarem Wohnraum zu leisten.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
 <h2 class="wp-block-heading">Die Idee hinter IMOVA</h2>
 <!-- /wp:heading -->
 
+<!-- wp:paragraph {"className":"is-style-lead"} -->
+<p class="is-style-lead"><em>Aus Alt mach Neu – mit Respekt vor dem Bestehenden.</em></p>
+<!-- /wp:paragraph -->
+
 <!-- wp:paragraph -->
-<p>[Platzhalter] Mit IMOVA PROJEKT verbindet er zeitgemäße Wohnqualität mit einem verantwortungsvollen Umgang mit Ressourcen – und mit einem Geschäftsmodell, das Käufern wie Verkäufern die Maklerprovision erspart.</p>
+<p>Nicht jede Immobilie muss neu gebaut werden, um etwas Besonderes zu sein. Oft steckt gerade in älteren Wohnungen und Häusern viel mehr Potenzial, als man auf den ersten Blick vermutet.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Genau das begeistert mich: Bestehende Immobilien neu zu denken, ihre Stärken hervorzuheben und mit durchdachten Modernisierungen etwas zu schaffen, das wieder viele Jahre Freude bereitet.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Mit Imova möchte ich zeigen, wie sich der Charme bestehender Immobilien mit modernem Wohnkomfort verbinden lässt. Dabei geht es mir nicht darum, alles Alte einfach durch Neues zu ersetzen, sondern vorhandene Werte zu erhalten, Ressourcen bewusst einzusetzen und Wohnraum zu schaffen, der auch langfristig überzeugt.</p>
 <!-- /wp:paragraph -->
 HTML;
 }
@@ -385,19 +441,15 @@ function imova_default_imprint(): string {
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Umsatzsteuer-ID</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>[Platzhalter – Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG, sofern vorhanden. Andernfalls diesen Abschnitt löschen.]</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Erlaubnis nach § 34c GewO / Aufsichtsbehörde</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>[Platzhalter – sofern eine Erlaubnis nach § 34c GewO besteht (z. B. als Bauträger oder Immobilienmakler), hier die zuständige Aufsichtsbehörde mit Anschrift angeben. Andernfalls diesen Abschnitt löschen.]</p>
+<p>Erlaubnis nach § 34c Abs. 1 Satz 1 Nr. 1 GewO (Immobilienmakler) und Nr. 3b GewO (Baubetreuer), erteilt durch die zuständige Aufsichtsbehörde:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>IHK für München und Oberbayern<br>Max-Joseph-Straße 2, 80333 München<br><a href="https://www.ihk-muenchen.de" target="_blank" rel="noopener">www.ihk-muenchen.de</a></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
@@ -421,7 +473,7 @@ function imova_default_imprint(): string {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>[Platzhalter – Bildquellen angeben, z. B. „Fotos: Unsplash“ bzw. die Fotografen der Objektbilder.]</p>
+<p>Symbolbilder: Unsplash (unsplash.com)</p>
 <!-- /wp:paragraph -->
 HTML;
 }
@@ -430,7 +482,7 @@ function imova_default_privacy(): string {
 	$s = 'imova_opt';
 	return <<<HTML
 <!-- wp:paragraph -->
-<p><em>Stand: Oktober 2026. [Hinweis für den Betreiber: Diese Vorlage ist auf die Funktionen dieser Website zugeschnitten, ersetzt aber keine Rechtsberatung. Bitte vor Veröffentlichung prüfen lassen und die Angaben zum Hosting ergänzen.]</em></p>
+<p><em>Stand: Oktober 2026. [Hinweis für den Betreiber: Diese Vorlage ist auf die Funktionen dieser Website zugeschnitten, ersetzt aber keine Rechtsberatung. Bitte vor Veröffentlichung prüfen lassen.]</em></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
@@ -454,7 +506,7 @@ function imova_default_privacy(): string {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Diese Website wird bei [Platzhalter: Name und Anschrift des Hosting-Anbieters] gehostet. Mit diesem besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Beim Aufruf der Website werden technisch notwendige Daten (IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browser und Betriebssystem, Referrer-URL) in Server-Logfiles gespeichert, um den sicheren und stabilen Betrieb zu gewährleisten (Art. 6 Abs. 1 lit. f DSGVO). Die Logfiles werden nach spätestens [Platzhalter: z. B. 14] Tagen gelöscht.</p>
+<p>Diese Website wird bei der IONOS SE, Elgendorfer Straße 57, 56410 Montabaur gehostet. Mit diesem besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Beim Aufruf der Website werden technisch notwendige Daten (IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browser und Betriebssystem, Referrer-URL) in Server-Logfiles gespeichert, um den sicheren und stabilen Betrieb zu gewährleisten (Art. 6 Abs. 1 lit. f DSGVO). Die Logfiles werden nach kurzer Zeit automatisch gelöscht, sofern nicht ein Sicherheitsvorfall eine längere Aufbewahrung erfordert.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->

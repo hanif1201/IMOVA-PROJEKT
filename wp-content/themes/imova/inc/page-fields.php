@@ -42,6 +42,8 @@ function imova_page_field_config(): array {
 				'savings_eyebrow' => $t( 'Überzeile', 'Direkt statt über Makler' ),
 				'savings_title'   => $t( 'Überschrift', '{provision} % Provision sparen.' ),
 				'savings_text'    => $ta( 'Text', 'Ob Sie von uns kaufen oder an uns verkaufen: Sie handeln direkt mit dem Eigentümer. Die übliche Maklerprovision von {provision} % entfällt – Geld, das in Ihrem Zuhause besser aufgehoben ist.' ),
+				'costs_title'     => $t( 'Kaufnebenkosten – Titel', 'Niedrige Kaufnebenkosten' ),
+				'costs_text'      => $ta( 'Kaufnebenkosten – Text', 'Ohne Maklerprovision fallen beim Kauf nur noch Grunderwerbsteuer, Notar und Grundbuch an – insgesamt maximal {nebenkosten} % des Kaufpreises statt rund {nebenkosten_makler} % mit Makler.' ),
 				'finance_title'   => $t( 'Finanzierung – Titel', 'Finanzierung aus einer Hand' ),
 				'finance_text'    => $ta( 'Finanzierung – Text', 'Wir arbeiten mit erfahrenen Finanzierungsberatern zusammen, die Ihnen direkt günstige Konditionen vermitteln. Und Sie sparen sich den Papierkram: Alle Unterlagen, die für die Finanzierung benötigt werden, leiten wir direkt an Ihren Finanzberater weiter – Sie müssen nichts beim Verkäufer anfordern oder selbst weiterleiten.', 4 ),
 				'finance_point1'  => $t( 'Finanzierung – Punkt 1', 'Günstige Konditionen über erfahrene Partner' ),
@@ -62,8 +64,8 @@ function imova_page_field_config(): array {
 				'trust2_text'  => $t( 'Punkt 2 – Text', 'Unterlagen gehen direkt an Ihren Berater' ),
 				'trust3_title' => $t( 'Punkt 3 – Titel', 'Ohne Maklerprovision' ),
 				'trust3_text'  => $t( 'Punkt 3 – Text', 'Direkt vom bzw. an den Eigentümer' ),
-				'trust4_title' => $t( 'Punkt 4 – Titel', 'Persönlich erreichbar' ),
-				'trust4_text'  => $t( 'Punkt 4 – Text', 'Direkt beim Geschäftsführer' ),
+				'trust4_title' => $t( 'Punkt 4 – Titel', 'Von Anfang bis Abschluss' ),
+				'trust4_text'  => $ta( 'Punkt 4 – Text', 'Von der ersten Besichtigung über die Zusammenstellung aller Unterlagen bis zum Notartermin stehen wir Ihnen persönlich zur Seite.', 2 ),
 			),
 			'Kontakt-Abschluss' => array(
 				'cta_title' => $t( 'Überschrift', 'Lassen Sie uns sprechen.' ),
@@ -84,7 +86,7 @@ function imova_page_field_config(): array {
 			),
 			'Team auf vier Pfoten' => array(
 				'dogs_title' => $t( 'Überschrift', 'Das Team auf vier Pfoten' ),
-				'dogs_text'  => $ta( 'Einleitung', 'Ohne sie läuft bei uns nichts – zumindest nicht pünktlich zur Gassi-Zeit.' ),
+				'dogs_text'  => $ta( 'Einleitung', 'Keine Maklerlizenz, keine Ahnung von Quadratmeterpreisen – aber immer mit vollem Einsatz dabei. Unsere beiden Vierbeiner sorgen für gute Laune und die nötige Portion Abwechslung im Immobilienalltag.' ),
 				'dog1_image' => $im( 'Hund 1 – Foto', 'keily' ),
 				'dog1_name'  => $t( 'Hund 1 – Name', 'Keily' ),
 				'dog1_role'  => $t( 'Hund 1 – Rolle', 'Feelgood Manager' ),
@@ -100,8 +102,8 @@ function imova_page_field_config(): array {
 				'value1_text'  => $ta( 'Wert 1 – Text', 'Wir modernisieren mit Blick auf Ressourcen: erhalten, was gut ist, erneuern, was nötig ist.' ),
 				'value2_title' => $t( 'Wert 2 – Titel', 'Ehrlichkeit' ),
 				'value2_text'  => $ta( 'Wert 2 – Text', 'Klare Aussagen, faire Preise, keine versteckten Kosten. Was wir zusagen, halten wir.' ),
-				'value3_title' => $t( 'Wert 3 – Titel', 'Nähe' ),
-				'value3_text'  => $ta( 'Wert 3 – Text', 'Kurze Wege, ein fester Ansprechpartner und echtes Interesse an den Menschen hinter jeder Immobilie.' ),
+				'value3_title' => $t( 'Wert 3 – Titel', 'Menschlichkeit' ),
+				'value3_text'  => $ta( 'Wert 3 – Text', 'Wir begegnen allen auf Augenhöhe – mit einem festen Ansprechpartner und echtem Interesse an den Menschen hinter jeder Immobilie.' ),
 			),
 		),
 
@@ -124,7 +126,7 @@ function imova_page_field_config(): array {
 			),
 			'Konditionen' => array(
 				'terms_title' => $t( 'Überschrift', 'Konditionen' ),
-				'terms_text'  => $ta( 'Text', "[Platzhalter – bitte durch die finalen Konditionen ersetzen]\nHöhe der Provision: … % des notariellen Kaufpreises (bzw. pauschal … €).\nFälligkeit: nach vollständiger Kaufpreiszahlung.\nVoraussetzung: Die Immobilie war uns zum Zeitpunkt Ihres Tipps noch nicht bekannt, und der Ankauf kommt innerhalb von 12 Monaten zustande.\nVor der Auszahlung schließen wir eine kurze schriftliche Tippgebervereinbarung.", 7 ),
+				'terms_text'  => $ta( 'Text', "Die Höhe der Tippgeber-Provision und die Konditionen werden individuell vereinbart – abhängig von Immobilie und Kaufpreis.\nBevor wir tätig werden, halten wir alles in einer kurzen schriftlichen Tippgebervereinbarung fest. So wissen Sie von Anfang an, woran Sie sind.", 4 ),
 			),
 			'Vertrauen' => array(
 				'trust1_title' => $t( 'Punkt 1 – Titel', 'Vertraulich' ),
@@ -152,10 +154,10 @@ function imova_page_field_config(): array {
 				'benefit1_text'  => $ta( 'Vorteil 1 – Text', 'Sie verkaufen direkt an uns. Die übliche Provision von {provision} % entfällt vollständig.' ),
 				'benefit2_title' => $t( 'Vorteil 2 – Titel', 'Schnell & unkompliziert' ),
 				'benefit2_text'  => $ta( 'Vorteil 2 – Text', 'Nach der Besichtigung erhalten Sie zeitnah eine fundierte Einschätzung und ein konkretes Angebot.' ),
-				'benefit3_title' => $t( 'Vorteil 3 – Titel', 'Finanzierung gesichert' ),
-				'benefit3_text'  => $ta( 'Vorteil 3 – Text', 'Unsere Finanzierungspartner sind von Anfang an eingebunden und vermitteln direkt günstige Konditionen.' ),
-				'benefit4_title' => $t( 'Vorteil 4 – Titel', 'Unterlagen direkt zum Berater' ),
-				'benefit4_text'  => $ta( 'Vorteil 4 – Text', 'Ihre Objektunterlagen gehen ohne Umwege an den Finanzierungsberater – das spart Zeit und Rückfragen.' ),
+				'benefit3_title' => $t( 'Vorteil 3 – Titel', 'Sicherer Ablauf' ),
+				'benefit3_text'  => $ta( 'Vorteil 3 – Text', 'Klare Vereinbarungen, Abwicklung über den Notar und ein verlässlicher Käufer – ohne Finanzierungsrisiko, das den Verkauf platzen lässt.' ),
+				'benefit4_title' => $t( 'Vorteil 4 – Titel', 'Keine Besichtigungstouristen' ),
+				'benefit4_text'  => $ta( 'Vorteil 4 – Text', 'Keine öffentlichen Inserate, keine Massenbesichtigungen: Statt vieler fremder Interessenten in Ihrem Zuhause gibt es einen Termin mit uns.' ),
 			),
 			'Ablauf' => array(
 				'process_title' => $t( 'Überschrift', 'In vier Schritten zum Verkauf' ),
@@ -215,7 +217,7 @@ function imova_field( string $key, ?int $page_id = null ): string {
 	if ( '' === $value && 'image' !== ( $defs[ $key ]['type'] ?? '' ) ) {
 		$value = (string) ( $defs[ $key ]['default'] ?? '' );
 	}
-	return str_replace( '{provision}', imova_opt( 'commission_rate' ), $value );
+	return str_replace( array( '{provision}', '{nebenkosten}', '{nebenkosten_makler}' ), array( imova_opt( 'commission_rate' ), imova_opt( 'closing_costs' ), imova_closing_costs_with_agent() ), $value );
 }
 
 /**

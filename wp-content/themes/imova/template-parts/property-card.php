@@ -37,6 +37,10 @@ $location = imova_prop_location();
 				<?php endif; ?>
 				<div><dt>Kaufpreis</dt><dd><?php echo esc_html( imova_prop_price_label() ); ?></dd></div>
 			</dl>
+			<?php $saving = 'verkauft' === $status ? 0 : imova_prop_saving(); ?>
+			<?php if ( $saving ) : ?>
+				<p class="property-card__saving"><?php echo imova_icon( 'percent', 14 ); // phpcs:ignore ?> Sie sparen <?php echo esc_html( imova_format_price( $saving ) ); ?> Maklerprovision</p>
+			<?php endif; ?>
 		</div>
 	</a>
 </article>

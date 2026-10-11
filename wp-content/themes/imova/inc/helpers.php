@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
  */
 function imova_default_settings(): array {
 	return array(
-		'company'         => 'IMOVA PROJEKT GmbH',
+		'company'         => 'Imova Projekt GmbH',
 		'director'        => 'Sebastian Fäth',
 		'street'          => 'Prinzregentenstraße 157',
 		'zip_city'        => '81677 München',
@@ -24,6 +24,8 @@ function imova_default_settings(): array {
 		'vat_id'          => '',
 		'commission_rate' => '3,57',
 		'referral_reward' => 'Attraktive Provision bei erfolgreichem Ankauf',
+		'closing_costs'   => '5,5',
+		'instagram'       => 'https://www.instagram.com/imovaprojekt/',
 		'logo_dark'       => '',
 		'logo_light'      => '',
 	);
@@ -38,6 +40,14 @@ function imova_opt( string $key ): string {
 		$settings = wp_parse_args( (array) get_option( 'imova_settings', array() ), imova_default_settings() );
 	}
 	return (string) ( $settings[ $key ] ?? '' );
+}
+
+/**
+ * Kaufnebenkosten mit Makler (Nebenkosten + Provision), gerundet, z. B. „9“.
+ */
+function imova_closing_costs_with_agent(): string {
+	$sum = (float) str_replace( ',', '.', imova_opt( 'closing_costs' ) ) + (float) str_replace( ',', '.', imova_opt( 'commission_rate' ) );
+	return number_format_i18n( round( $sum ), 0 );
 }
 
 /**
@@ -115,6 +125,7 @@ function imova_icon( string $name, int $size = 20 ): string {
 		'user'     => '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/>',
 		'upload'   => '<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>',
 		'expand'   => '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+		'instagram'=> '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/>',
 		'lock'     => '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
 	);
 	if ( ! isset( $paths[ $name ] ) ) {

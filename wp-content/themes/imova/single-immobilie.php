@@ -230,7 +230,18 @@ while ( have_posts() ) :
 					<?php if ( imova_prop( 'price_note' ) && ! $sold ) : ?>
 						<p class="price-card__note"><?php echo esc_html( imova_prop( 'price_note' ) ); ?></p>
 					<?php endif; ?>
-					<p class="price-card__commission"><?php echo imova_icon( 'percent', 16 ); // phpcs:ignore ?> Provisionsfrei – direkt vom Eigentümer</p>
+					<?php $saving = $sold ? 0 : imova_prop_saving(); ?>
+					<?php if ( $saving ) : ?>
+						<div class="price-card__saving">
+							<span class="price-card__saving-label"><?php echo imova_icon( 'percent', 16 ); // phpcs:ignore ?> Ihre Ersparnis</span>
+							<strong><?php echo esc_html( imova_format_price( $saving ) ); ?></strong>
+							<span class="price-card__saving-note">gegenüber <?php echo esc_html( imova_opt( 'commission_rate' ) ); ?> % üblicher Maklerprovision – Sie kaufen provisionsfrei direkt vom Eigentümer.</span>
+						</div>
+						<?php $costs = (int) round( (float) imova_prop( 'price' ) * (float) str_replace( ',', '.', imova_opt( 'closing_costs' ) ) / 100 ); ?>
+						<p class="price-card__costs">Kaufnebenkosten max. <?php echo esc_html( imova_opt( 'closing_costs' ) ); ?> % · ca. <?php echo esc_html( imova_format_price( $costs ) ); ?><br><span>Grunderwerbsteuer, Notar und Grundbuch – ohne Maklerprovision</span></p>
+					<?php else : ?>
+						<p class="price-card__commission"><?php echo imova_icon( 'percent', 16 ); // phpcs:ignore ?> Provisionsfrei – direkt vom Eigentümer</p>
+					<?php endif; ?>
 
 					<?php if ( ! $sold ) : ?>
 						<a class="btn btn--dark btn--block" href="#anfrage">Anfrage senden</a>
