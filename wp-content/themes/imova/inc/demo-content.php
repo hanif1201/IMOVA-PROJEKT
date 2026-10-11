@@ -17,7 +17,7 @@ add_action( 'init', 'imova_run_updates', 20 );
  */
 function imova_run_updates(): void {
 	$version = (string) get_option( 'imova_content_version', '1.0.0' );
-	if ( version_compare( $version, '1.2.0', '>=' ) || ! get_option( 'imova_setup_done' ) ) {
+	if ( version_compare( $version, '1.2.1', '>=' ) || ! get_option( 'imova_setup_done' ) ) {
 		if ( version_compare( $version, IMOVA_VERSION, '<' ) ) {
 			update_option( 'imova_content_version', IMOVA_VERSION );
 		}
@@ -47,7 +47,10 @@ function imova_run_updates(): void {
 	$update( 'ueber-uns', 'Mit IMOVA PROJEKT möchte ich', fn( $c ) => str_replace( 'Mit IMOVA PROJEKT möchte ich', 'Mit Imova möchte ich', $c ) );
 	$update( 'impressum', '[Platzhalter – Bildquellen', fn( $c ) => str_replace( '[Platzhalter – Bildquellen angeben, z. B. „Fotos: Unsplash“ bzw. die Fotografen der Objektbilder.]', 'Symbolbilder: Unsplash (unsplash.com)', $c ) );
 
-	update_option( 'imova_content_version', '1.2.0' );
+	// 1.2.1 – Hinweis für den Betreiber nicht öffentlich anzeigen
+	$update( 'datenschutz', '[Hinweis für den Betreiber:', fn( $c ) => preg_replace( '/Stand: ([^.<]+)\. \[Hinweis für den Betreiber:[^\]]*\]/u', 'Stand: $1', $c ) );
+
+	update_option( 'imova_content_version', '1.2.1' );
 }
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
@@ -482,7 +485,7 @@ function imova_default_privacy(): string {
 	$s = 'imova_opt';
 	return <<<HTML
 <!-- wp:paragraph -->
-<p><em>Stand: Oktober 2026. [Hinweis für den Betreiber: Diese Vorlage ist auf die Funktionen dieser Website zugeschnitten, ersetzt aber keine Rechtsberatung. Bitte vor Veröffentlichung prüfen lassen.]</em></p>
+<p><em>Stand: Oktober 2026</em></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
