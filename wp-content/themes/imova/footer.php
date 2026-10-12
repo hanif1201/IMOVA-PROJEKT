@@ -78,6 +78,13 @@
 	</div>
 </footer>
 
+<?php if ( imova_whatsapp_url() ) : ?>
+	<a class="wa-float" href="<?php echo esc_url( imova_whatsapp_url( imova_whatsapp_context_text() ) ); ?>" target="_blank" rel="noopener" aria-label="Per WhatsApp schreiben">
+		<span class="wa-float__label">Schreiben Sie uns auf WhatsApp</span>
+		<span class="wa-float__icon"><?php echo imova_whatsapp_icon( 30 ); // phpcs:ignore ?></span>
+	</a>
+<?php endif; ?>
+
 <?php get_template_part( 'template-parts/consent' ); ?>
 <?php wp_footer(); ?>
 </body>

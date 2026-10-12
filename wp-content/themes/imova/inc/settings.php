@@ -27,6 +27,7 @@ function imova_settings_fields(): array {
 			'phone'        => 'Telefon',
 			'email'        => 'E-Mail (öffentlich)',
 			'notify_email' => 'E-Mail für Formular-Benachrichtigungen',
+			'whatsapp'     => 'WhatsApp-Nummer (leer lassen = Button ausblenden)',
 			'instagram'    => 'Instagram-Profil (Link)',
 		),
 		'Texte & Zahlen' => array(

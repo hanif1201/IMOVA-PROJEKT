@@ -17,7 +17,7 @@ add_action( 'init', 'imova_run_updates', 20 );
  */
 function imova_run_updates(): void {
 	$version = (string) get_option( 'imova_content_version', '1.0.0' );
-	if ( version_compare( $version, '1.2.1', '>=' ) || ! get_option( 'imova_setup_done' ) ) {
+	if ( version_compare( $version, '1.3.0', '>=' ) || ! get_option( 'imova_setup_done' ) ) {
 		if ( version_compare( $version, IMOVA_VERSION, '<' ) ) {
 			update_option( 'imova_content_version', IMOVA_VERSION );
 		}
@@ -50,7 +50,19 @@ function imova_run_updates(): void {
 	// 1.2.1 – Hinweis für den Betreiber nicht öffentlich anzeigen
 	$update( 'datenschutz', '[Hinweis für den Betreiber:', fn( $c ) => preg_replace( '/Stand: ([^.<]+)\. \[Hinweis für den Betreiber:[^\]]*\]/u', 'Stand: $1', $c ) );
 
-	update_option( 'imova_content_version', '1.2.1' );
+	// 1.3.0 – WhatsApp in der Datenschutzerklärung
+	$wa_block = <<<'HTML'
+<!-- wp:heading -->
+<h2 class="wp-block-heading">8. Kontakt über WhatsApp</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Sie können uns freiwillig über WhatsApp kontaktieren, einen Dienst der WhatsApp Ireland Limited (Dublin, Irland). Der Button auf unserer Website ist ein einfacher Link: Daten werden erst übertragen, wenn Sie WhatsApp öffnen und uns eine Nachricht senden. Dabei verarbeitet WhatsApp u. a. Ihre Telefonnummer und Metadaten der Kommunikation; eine Übermittlung in die USA ist möglich (Meta Platforms ist unter dem EU-US Data Privacy Framework zertifiziert). Wir nutzen Ihre Nachricht ausschließlich zur Bearbeitung Ihres Anliegens (Art. 6 Abs. 1 lit. b bzw. f DSGVO). Wenn Sie WhatsApp nicht nutzen möchten, erreichen Sie uns ebenso per Telefon, E-Mail oder Kontaktformular. Weitere Informationen: <a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener">whatsapp.com/legal/privacy-policy-eea</a>.</p>
+<!-- /wp:paragraph -->
+HTML;
+	$update( 'datenschutz', '<h2 class="wp-block-heading">8. Ihre Rechte</h2>', fn( $c ) => str_contains( $c, 'WhatsApp' ) ? $c : str_replace( "<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">8. Ihre Rechte</h2>", $wa_block . "\n\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">9. Ihre Rechte</h2>", $c ) );
+
+	update_option( 'imova_content_version', '1.3.0' );
 }
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
@@ -561,7 +573,15 @@ function imova_default_privacy(): string {
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
-<h2 class="wp-block-heading">8. Ihre Rechte</h2>
+<h2 class="wp-block-heading">8. Kontakt über WhatsApp</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Sie können uns freiwillig über WhatsApp kontaktieren, einen Dienst der WhatsApp Ireland Limited (Dublin, Irland). Der Button auf unserer Website ist ein einfacher Link: Daten werden erst übertragen, wenn Sie WhatsApp öffnen und uns eine Nachricht senden. Dabei verarbeitet WhatsApp u. a. Ihre Telefonnummer und Metadaten der Kommunikation; eine Übermittlung in die USA ist möglich (Meta Platforms ist unter dem EU-US Data Privacy Framework zertifiziert). Wir nutzen Ihre Nachricht ausschließlich zur Bearbeitung Ihres Anliegens (Art. 6 Abs. 1 lit. b bzw. f DSGVO). Wenn Sie WhatsApp nicht nutzen möchten, erreichen Sie uns ebenso per Telefon, E-Mail oder Kontaktformular. Weitere Informationen: <a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener">whatsapp.com/legal/privacy-policy-eea</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">9. Ihre Rechte</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->

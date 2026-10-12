@@ -38,3 +38,9 @@
 .imova-dash li { padding: 8px 0; border-bottom: 1px solid #f0f0f1; }
 .imova-logo-cell .imova-image-field__preview img { max-height: 90px; padding: 12px; background: #fff; border: 1px solid #dcdcde; object-fit: contain; }
 .imova-logo-cell.is-dark .imova-image-field__preview img { background: #1d232e; border-color: #1d232e; }
+
+/* Formular direkt unter dem Titel */
+#imova_top-sortables { margin-top: 20px; }
+#imova_top-sortables .postbox .hndle { font-size: 15px; }
+.imova-editor-title { margin: 28px 0 10px; padding: 0; font-size: 15px; font-weight: 600; }
+.post-type-immobilie #titlediv #title { font-size: 1.6em; }

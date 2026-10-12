@@ -29,6 +29,9 @@ $photo = $about ? imova_field_img( 'founder_image', 'imova-portrait', (int) $abo
 			<p><?php echo esc_html( $args['text'] ?? imova_field( 'cta_text', $front ) ); ?></p>
 		</div>
 		<div class="contact-cta__actions">
+			<?php if ( imova_whatsapp_url() ) : ?>
+				<a class="btn btn--whatsapp" href="<?php echo esc_url( imova_whatsapp_url( imova_whatsapp_context_text() ) ); ?>" target="_blank" rel="noopener"><?php echo imova_whatsapp_icon( 18 ); // phpcs:ignore ?> Per WhatsApp schreiben</a>
+			<?php endif; ?>
 			<a class="btn btn--light" href="<?php echo esc_attr( imova_tel_href( imova_opt( 'phone' ) ) ); ?>"><?php echo imova_icon( 'phone', 18 ); // phpcs:ignore ?> <?php echo esc_html( imova_opt( 'phone' ) ); ?></a>
 			<a class="btn btn--ghost-light" href="<?php echo esc_url( imova_page_url( 'page-templates/kontakt.php', 'kontakt' ) ); ?>">Nachricht schreiben <?php echo imova_icon( 'arrow', 18 ); // phpcs:ignore ?></a>
 		</div>

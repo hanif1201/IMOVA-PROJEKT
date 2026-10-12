@@ -248,6 +248,9 @@ while ( have_posts() ) :
 					<?php else : ?>
 						<a class="btn btn--dark btn--block" href="<?php echo esc_url( get_post_type_archive_link( 'immobilie' ) ); ?>">Verfügbare Immobilien</a>
 					<?php endif; ?>
+					<?php if ( ! $sold && imova_whatsapp_url() ) : ?>
+						<a class="btn btn--whatsapp btn--block" href="<?php echo esc_url( imova_whatsapp_url( imova_whatsapp_context_text() ) ); ?>" target="_blank" rel="noopener"><?php echo imova_whatsapp_icon( 18 ); // phpcs:ignore ?> Per WhatsApp anfragen</a>
+					<?php endif; ?>
 					<a class="btn btn--outline btn--block" href="<?php echo esc_attr( imova_tel_href( imova_opt( 'phone' ) ) ); ?>"><?php echo imova_icon( 'phone', 18 ); // phpcs:ignore ?> <?php echo esc_html( imova_opt( 'phone' ) ); ?></a>
 					<?php if ( $expose && ! $sold ) : ?>
 						<a class="btn btn--ghost btn--block" href="<?php echo esc_url( (string) wp_get_attachment_url( $expose ) ); ?>" download><?php echo imova_icon( 'file', 18 ); // phpcs:ignore ?> Exposé herunterladen (PDF)</a>

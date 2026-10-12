@@ -109,6 +109,7 @@
 	const setConsent = (value) => {
 		storage.set(CONSENT_KEY, value);
 		if (banner) banner.hidden = true;
+		document.body.classList.remove('consent-open');
 		if (value === 'all') {
 			loadAllMaps();
 		} else {
@@ -121,7 +122,10 @@
 	};
 
 	if (banner) {
-		if (!consent()) banner.hidden = false;
+		if (!consent()) {
+			banner.hidden = false;
+			document.body.classList.add('consent-open');
+		}
 		$$('[data-consent-choice]', banner).forEach((btn) => {
 			btn.addEventListener('click', () => setConsent(btn.dataset.consentChoice));
 		});
@@ -129,6 +133,7 @@
 	$$('[data-consent-open]').forEach((btn) => btn.addEventListener('click', () => {
 		if (!banner) return;
 		banner.hidden = false;
+		document.body.classList.add('consent-open');
 		$('button', banner).focus();
 	}));
 

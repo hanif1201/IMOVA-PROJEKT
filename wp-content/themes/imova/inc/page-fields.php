@@ -245,7 +245,7 @@ add_action(
 	function ( WP_Post $post ) {
 		$config = imova_page_field_config();
 		if ( isset( $config[ imova_page_field_context( $post->ID ) ] ) ) {
-			add_meta_box( 'imova-page-fields', 'Seiteninhalte', 'imova_render_page_fields_box', 'page', 'normal', 'high' );
+			add_meta_box( 'imova-page-fields', 'Seiteninhalte', 'imova_render_page_fields_box', 'page', 'imova_top', 'high' );
 		}
 	}
 );

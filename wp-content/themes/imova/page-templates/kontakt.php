@@ -16,6 +16,9 @@ the_post();
 	<div class="container form-layout form-layout--contact">
 		<div class="contact-info">
 			<ul class="contact-list contact-list--large">
+				<?php if ( imova_whatsapp_url() ) : ?>
+					<li class="contact-list__wa"><?php echo imova_whatsapp_icon( 20 ); // phpcs:ignore ?><div><span class="label">WhatsApp – am schnellsten</span><a href="<?php echo esc_url( imova_whatsapp_url( imova_whatsapp_context_text() ) ); ?>" target="_blank" rel="noopener">Nachricht schreiben</a></div></li>
+				<?php endif; ?>
 				<li><?php echo imova_icon( 'phone', 20 ); // phpcs:ignore ?><div><span class="label">Telefon</span><a href="<?php echo esc_attr( imova_tel_href( imova_opt( 'phone' ) ) ); ?>"><?php echo esc_html( imova_opt( 'phone' ) ); ?></a></div></li>
 				<li><?php echo imova_icon( 'mail', 20 ); // phpcs:ignore ?><div><span class="label">E-Mail</span><a href="mailto:<?php echo esc_attr( imova_opt( 'email' ) ); ?>"><?php echo esc_html( imova_opt( 'email' ) ); ?></a></div></li>
 				<li><?php echo imova_icon( 'pin', 20 ); // phpcs:ignore ?><div><span class="label">Region</span><span class="contact-list__value">München &amp; Augsburg</span></div></li>

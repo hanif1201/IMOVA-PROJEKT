@@ -46,6 +46,7 @@ Das Theme liegt in `wp-content/themes/imova` und ist in den Container eingebunde
 - [ ] Impressum: USt-IdNr., ggf. § 34c GewO / Aufsichtsbehörde, Bildnachweise
 - [ ] Datenschutzerklärung rechtlich prüfen lassen (Anwalt oder Generator wie eRecht24 / datenschutz-generator.de)
 - [ ] Auftragsverarbeitungsvertrag (AVV) im IONOS-Kundenkonto abschließen
+- [ ] Für geschäftliche Chats die App „WhatsApp Business“ nutzen (WhatsApp-Nummer: Einstellungen → IMOVA)
 - [ ] Augsburg-Objekt: Fotos, Fläche, Preis, Energieausweis, sobald verfügbar
 - [ ] Eigene Bilder statt Platzhalter (Hero, Philosophie, Tippgeber, Verkaufen)
 - [ ] Domain/Hosting, SMTP, Admin-Passwort, `WP_DEBUG` aus

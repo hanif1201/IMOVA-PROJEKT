@@ -149,8 +149,8 @@ function imova_prop_gallery_ids( $post_id = null ): array {
 add_action(
 	'add_meta_boxes_immobilie',
 	function () {
-		add_meta_box( 'imova-property', 'Objektdaten', 'imova_render_property_box', 'immobilie', 'normal', 'high' );
-		add_meta_box( 'imova-property-media', 'Bildergalerie & Exposé', 'imova_render_property_media_box', 'immobilie', 'normal', 'high' );
+		add_meta_box( 'imova-property-media', 'Fotos & Exposé', 'imova_render_property_media_box', 'immobilie', 'imova_top', 'high' );
+		add_meta_box( 'imova-property', 'Objektdaten', 'imova_render_property_box', 'immobilie', 'imova_top', 'high' );
 	}
 );
 
@@ -160,7 +160,11 @@ function imova_render_property_box( WP_Post $post ): void {
 	foreach ( imova_property_fields() as $section => $fields ) {
 		printf( '<h3 class="imova-admin-fields__title">%s</h3><div class="imova-admin-fields__grid">', esc_html( $section ) );
 		foreach ( $fields as $key => $field ) {
-			imova_admin_field( '_imova_' . $key, $field, get_post_meta( $post->ID, '_imova_' . $key, true ) );
+			$value = get_post_meta( $post->ID, '_imova_' . $key, true );
+			if ( 'status' === $key && '' === $value ) {
+				$value = 'verfuegbar';
+			}
+			imova_admin_field( '_imova_' . $key, $field, $value );
 		}
 		echo '</div>';
 	}
@@ -225,7 +229,7 @@ function imova_render_property_media_box( WP_Post $post ): void {
 	$ids    = array_filter( array_map( 'absint', explode( ',', (string) get_post_meta( $post->ID, '_imova_gallery', true ) ) ) );
 	$expose = (int) get_post_meta( $post->ID, '_imova_expose', true );
 	?>
-	<p class="description">Das <strong>Titelbild</strong> (rechte Spalte) erscheint zuerst. Weitere Bilder hier hinzufügen und per Drag & Drop sortieren.</p>
+	<p class="description">Fotos hinzufügen und per Drag &amp; Drop sortieren. <strong>Das erste Foto wird automatisch zum Titelbild</strong> (oder rechts unter „Titelbild“ ein anderes wählen). Ohne Fotos zeigt die Website einen eleganten Platzhalter.</p>
 	<div class="imova-gallery" data-imova-gallery>
 		<input type="hidden" name="_imova_gallery" value="<?php echo esc_attr( implode( ',', $ids ) ); ?>">
 		<ul class="imova-gallery__list">
@@ -290,6 +294,11 @@ add_action(
 		}
 
 		$gallery = isset( $_POST['_imova_gallery'] ) ? implode( ',', array_filter( array_map( 'absint', explode( ',', wp_unslash( $_POST['_imova_gallery'] ) ) ) ) ) : '';
+		if ( $gallery && ! has_post_thumbnail( $post_id ) ) {
+			$ids = explode( ',', $gallery );
+			set_post_thumbnail( $post_id, (int) array_shift( $ids ) );
+			$gallery = implode( ',', $ids );
+		}
 		update_post_meta( $post_id, '_imova_gallery', $gallery );
 		update_post_meta( $post_id, '_imova_expose', isset( $_POST['_imova_expose'] ) ? absint( $_POST['_imova_expose'] ) : 0 );
 	}
